@@ -3,14 +3,6 @@
            https://api.github.com/users/<your name>
 */
 
-axios.get('https://api.github.com/users/<your name>')
-.then(response => {
-  debugger
-})
-.catch(error => {
-  debugger
-});
-
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -53,6 +45,61 @@ const followersArray = [];
 </div>
 
 */
+function fetchGithubInformation(githubData){
+  //debugger
+  const cardDivElement = document.createElement('div');
+  cardDivElement.classList.add('card');
+
+  const img = document.createElement('img');
+  //img.setAttribute('src', )
+
+  cardInfoDivElement = document.createElement('div');
+  cardInfoDivElement.classList.add('card-info');
+  
+  const h3 = document.createElement('h3');
+  h3.classList.add('name');
+  cardInfoDivElement.appendChild(h3);
+
+
+  for (let i = 0; i < 6; i++) {
+    const p = document.createElement('p');
+    const a = document.createElement('a');
+    if (i === 0){
+      p.classList.add('username');
+    }
+    else if(i === 1){
+      p.textContent = "Location: ";
+    }
+    else if(i === 2){
+      p.textContent = "Profile: ";      
+      p.appendChild(a);
+    }
+    else if(i === 3){
+      p.textContent = "Followers: ";
+    }
+    else if(i === 4){
+      p.textContent = "Following: ";
+    }
+    else if(i === 5){
+      p.textContent = "Bio: ";
+    }
+    cardInfoDivElement.appendChild(p);
+  }
+
+  cardDivElement.appendChild(img);
+  cardDivElement.appendChild(cardInfoDivElement);
+
+  console.log('DIV IS', cardDivElement);
+}
+fetchGithubInformation();
+
+axios.get('https://api.github.com/users/temitopeakinsoto')
+.then(response => {
+  //debugger
+})
+.catch(error => {
+  //debugger
+});
 
 /* List of LS Instructors Github username's: 
   tetondan
