@@ -24,7 +24,7 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -45,6 +45,65 @@ const followersArray = [];
 </div>
 
 */
+function fetchGithubInformation(githubData){
+    const cardDivElement = document.createElement('div');
+    cardDivElement.classList.add('card');
+
+    const img = document.createElement('img');
+    img.setAttribute('src', githubData.data.avatar_url);
+
+    cardInfoDivElement = document.createElement('div');
+    cardInfoDivElement.classList.add('card-info');
+    
+    const h3 = document.createElement('h3');
+    h3.classList.add('name');
+    h3.textContent = githubData.data.name;
+    cardInfoDivElement.appendChild(h3);
+
+    for (let i = 0; i < 6; i++) {
+      const p = document.createElement('p');      
+      if (i === 0){
+        p.classList.add('username');
+        p.textContent = githubData.data.login
+      }
+      else if(i === 1){
+        p.textContent = `Location: ${githubData.data.location}`;
+      }
+      else if(i === 2){
+        p.textContent = "Profile: ";
+        const a = document.createElement('a');
+        a.setAttribute('href', githubData.data.url);
+        a.textContent = githubData.data.url;
+        p.appendChild(a);
+      }
+      else if(i === 3){
+        p.textContent = `Followers: ${githubData.data.followers}`;
+      }
+      else if(i === 4){
+        p.textContent = `Following: ${githubData.data.following}`;
+      }
+      else if(i === 5){
+        p.textContent = `Bio: ${githubData.data.bio}`;
+      }
+      cardInfoDivElement.appendChild(p);
+    }
+  
+    cardDivElement.appendChild(img);
+    cardDivElement.appendChild(cardInfoDivElement);
+
+    document.querySelector('.cards').appendChild(cardDivElement);
+  }   
+
+
+  axios.get('https://api.github.com/users/temitopeakinsoto')
+  .then(response => {
+    fetchGithubInformation(response)
+  })
+  .catch(error => {
+  console.log(error.message);
+  });  
+//}
+
 
 /* List of LS Instructors Github username's: 
   tetondan
@@ -53,3 +112,14 @@ const followersArray = [];
   luishrd
   bigknell
 */
+const followersArray = ['tetondan','dustinmyers','justsml','luishrd','bigknell'];
+followersArray.forEach(follower => {
+  const axiosBaseUrl = 'https://api.github.com/users/';
+  const followerUrl = axiosBaseUrl + follower;
+  axios.get(followerUrl)
+  .then(response => {
+    fetchGithubInformation(response);
+  })
+  .catch();  
+})
+
