@@ -66,27 +66,29 @@ function fetchGithubInformation(githubData){
     cardInfoDivElement.appendChild(h3);
 
     for (let i = 0; i < 6; i++) {
-      const p = document.createElement('p');
-      const a = document.createElement('a');
+      const p = document.createElement('p');      
       if (i === 0){
         p.classList.add('username');
+        p.textContent = response.data.login
       }
       else if(i === 1){
         p.textContent = `Location: ${response.data.location}`;
       }
       else if(i === 2){
-        p.textContent = "Profile: "; 
-
+        p.textContent = "Profile: ";
+        const a = document.createElement('a');
+        a.setAttribute('href', response.data.url);
+        a.textContent = response.data.url;
         p.appendChild(a);
       }
       else if(i === 3){
-        p.textContent = "Followers: ";
+        p.textContent = `Followers: ${response.data.followers}`;
       }
       else if(i === 4){
-        p.textContent = "Following: ";
+        p.textContent = `Following: ${response.data.following}`;
       }
       else if(i === 5){
-        p.textContent = "Bio: ";
+        p.textContent = `Bio: ${response.data.bio}`;
       }
       cardInfoDivElement.appendChild(p);
     }
@@ -94,7 +96,9 @@ function fetchGithubInformation(githubData){
     cardDivElement.appendChild(img);
     cardDivElement.appendChild(cardInfoDivElement);
   
-    console.log('DIV IS', cardDivElement);
+    //console.log('DIV IS', cardDivElement);
+
+    return cardDiveElement;
   })
   .catch(error => {
   //debugger
